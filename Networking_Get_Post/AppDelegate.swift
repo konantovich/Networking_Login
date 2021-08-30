@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     
-    var bgSessionCompletionHandler: (()-> ())?//сюда сохраним completionHandler из handleEventsForBackgroundURLSession
-
-    //будет перехватывать идентификатор нашей сессии. Необходимо сохранить захваченое значение из параметра completionHandler
+    var bgSessionCompletionHandler: (()-> ())?
+    
+    
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         
         print("Yo")
@@ -54,34 +54,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        
-        /*
-        //Facebook SDK
-        let appId = Settings.appID //The Facebook App ID used by the SDK.
-        if url.scheme != nil && url.scheme!.hasPrefix("fb\(appId ?? "Facebook id nil")") && url.host == "autorize" {
-            return ApplicationDelegate.shared.application(app, open: url, options: options)
-        }
-        
-        
-        //Google SDK
-        var handled: Bool
-          handled = GIDSignIn.sharedInstance.handle(url)
-          if handled {
-            return true
-          }
-         */
+   
         return GIDSignIn.sharedInstance.handle(url)
     }
 
-    
-    
-    
-    
-    
-  
-   
-
-        
+ 
 
 }
 

@@ -116,7 +116,7 @@ class NetworkManager  {
         request.allHTTPHeaderFields = httpHeaders //параметры авторизации
         request.httpBody = imageProperties.data //изображение
         
-        //URLSession.shared.dataTask(with: request) отправляем запрос на сервер (выгружаем на сервер). А в data, response, error получаем его обратно
+        
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let response = response {
                 print(response)
