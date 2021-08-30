@@ -23,8 +23,6 @@
 		A065D52326B6B8E600E30A4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A065D52126B6B8E600E30A4D /* Main.storyboard */; };
 		A065D52526B6B8E800E30A4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A065D52426B6B8E800E30A4D /* Assets.xcassets */; };
 		A065D52826B6B8E800E30A4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A065D52626B6B8E800E30A4D /* LaunchScreen.storyboard */; };
-		A065D53326B6B8E900E30A4D /* Networking_Get_PostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A065D53226B6B8E900E30A4D /* Networking_Get_PostTests.swift */; };
-		A065D53E26B6B8E900E30A4D /* Networking_Get_PostUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A065D53D26B6B8E900E30A4D /* Networking_Get_PostUITests.swift */; };
 		A065D54C26B6BD5C00E30A4D /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A065D54B26B6BD5C00E30A4D /* ImageViewController.swift */; };
 		A065D54E26B7F49000E30A4D /* ApiStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A065D54D26B7F49000E30A4D /* ApiStruct.swift */; };
 		A065D55026B7F51D00E30A4D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A065D54F26B7F51D00E30A4D /* WebViewController.swift */; };
@@ -79,11 +77,7 @@
 		A065D52726B6B8E800E30A4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A065D52926B6B8E800E30A4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A065D52E26B6B8E900E30A4D /* Networking_LoginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Networking_LoginTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A065D53226B6B8E900E30A4D /* Networking_Get_PostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking_Get_PostTests.swift; sourceTree = "<group>"; };
-		A065D53426B6B8E900E30A4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A065D53926B6B8E900E30A4D /* Networking_LoginUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Networking_LoginUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A065D53D26B6B8E900E30A4D /* Networking_Get_PostUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking_Get_PostUITests.swift; sourceTree = "<group>"; };
-		A065D53F26B6B8E900E30A4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A065D54B26B6BD5C00E30A4D /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		A065D54D26B7F49000E30A4D /* ApiStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiStruct.swift; sourceTree = "<group>"; };
 		A065D54F26B7F51D00E30A4D /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -143,8 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				A065D51A26B6B8E600E30A4D /* Networking_Get_Post */,
-				A065D53126B6B8E900E30A4D /* Networking_Get_PostTests */,
-				A065D53C26B6B8E900E30A4D /* Networking_Get_PostUITests */,
 				A065D51926B6B8E600E30A4D /* Products */,
 				E2BFCCB14DDAF237640CFE45 /* Pods */,
 				486DAE068DC0B5C23AE90A45 /* Frameworks */,
@@ -188,24 +180,6 @@
 				A036174B26D80BC0003A84F4 /* GoogleService-Info.plist */,
 			);
 			path = Networking_Get_Post;
-			sourceTree = "<group>";
-		};
-		A065D53126B6B8E900E30A4D /* Networking_Get_PostTests */ = {
-			isa = PBXGroup;
-			children = (
-				A065D53226B6B8E900E30A4D /* Networking_Get_PostTests.swift */,
-				A065D53426B6B8E900E30A4D /* Info.plist */,
-			);
-			path = Networking_Get_PostTests;
-			sourceTree = "<group>";
-		};
-		A065D53C26B6B8E900E30A4D /* Networking_Get_PostUITests */ = {
-			isa = PBXGroup;
-			children = (
-				A065D53D26B6B8E900E30A4D /* Networking_Get_PostUITests.swift */,
-				A065D53F26B6B8E900E30A4D /* Info.plist */,
-			);
-			path = Networking_Get_PostUITests;
 			sourceTree = "<group>";
 		};
 		A065D55126B7F5CE00E30A4D /* Model */ = {
@@ -500,7 +474,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A065D53326B6B8E900E30A4D /* Networking_Get_PostTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +481,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A065D53E26B6B8E900E30A4D /* Networking_Get_PostUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
