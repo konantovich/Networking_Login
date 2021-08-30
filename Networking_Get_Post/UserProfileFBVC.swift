@@ -18,7 +18,7 @@ class UserProfileFBVC: UIViewController {
     @IBOutlet weak var loginUserActivityIndicator: UIActivityIndicatorView!
     
     private var provider: String? //поймем при помощи какого провайдера авторизован пользователь
-    private var currentUser: CurrentUserFromFirebase? //обращаемся к нашей моделе
+    private var currentUser: CurrentUserFromFirebase?
     
     
     lazy var logOutButton: UIButton = {
@@ -42,10 +42,9 @@ class UserProfileFBVC: UIViewController {
         
         loginUserLabel.isHidden = true
 
-        // Do any additional setup after loading the view.
     }
     
-    //в отличие от viewDidLoad() метод viewWillAppear вызывается при каждом появлении экрана
+   
     override func viewWillAppear(_ animated: Bool) {
         fetchingUserData()
     }
@@ -70,13 +69,11 @@ extension UserProfileFBVC {
  
     //открываем контроллер авторизации пользователя если он не залогинен
     private func  openLoginViewController () {
-        //if let token = AccessToken.current, !token.isExpired {}
-        
-        //проверяем активен ли токен авторизации пользователя
+       
       
             print("The user is logout in")
             
-            //если не активен то запускаем наш Storyboard / LoginViewController для логина на фейсбук(в основном потоке)
+            //если не активен то запускаем Storyboard / LoginViewController для логина на фейсбук
             DispatchQueue.main.async {
                 let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                 let loginVC = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
@@ -106,7 +103,7 @@ extension UserProfileFBVC {
                 //берем айди юзера
                 guard let uid = Auth.auth().currentUser?.uid else {return}
                 
-                //обращаемся к директориям БД Firebase и запрашиваем данные ввиде словаря
+                //обращаемся к директориям БД Firebase и запрашиваем данные
                 Database.database().reference()
                     .child("users")
                     .child(uid)
@@ -118,8 +115,7 @@ extension UserProfileFBVC {
                         
                         self.loginUserActivityIndicator.stopAnimating()
                         self.loginUserLabel.isHidden = false
-                        self.loginUserLabel.text = self.getProviderData() //функция с возвратом нужной строки
-                 
+                        self.loginUserLabel.text = self.getProviderData() 
                         
                     } withCancel: { error in
                             print("error fetch firebase: ", error)
@@ -134,8 +130,6 @@ extension UserProfileFBVC {
         //нужно понять с какого провайдера залогонился юзер (google facebook итд)
         if let providerData = Auth.auth().currentUser?.providerData {
            
-            
-            //providerData это [UserInfo], данный тип имеет юзер айди, в зависимости от того какое ID имеет пользователь нам нужно делать доавторизацию из той или инной сети
             for userInfo in providerData {
                 switch userInfo.providerID {
                    //нам нужно перебрать все варианты возможнолого логина и выйти
@@ -152,7 +146,6 @@ extension UserProfileFBVC {
                     print("log Out Firebase succes")
                     openLoginViewController()
                 default:
-                    //userInfo.providerID пишет название провайдера для входа, например "facebook.com"
                     print("User sign in with \(userInfo.providerID)")
                     
                     
@@ -163,7 +156,7 @@ extension UserProfileFBVC {
     }
     
     
-    //метод что бы определить провайдера (к которому залогинились) и дальше отправить данные например Label и тд
+    //метод что бы определить провайдера (к которому залогинились)
     private func getProviderData () -> String {
         
         var helloMessage = ""
@@ -185,7 +178,7 @@ extension UserProfileFBVC {
                 }
                 
             }
-            //полученное присваиваем в helloMessage и так как функция возвращает String, она вернет нам строку с данными залогиненного провайдера
+           
             helloMessage = "\(provider!)"
             
         }

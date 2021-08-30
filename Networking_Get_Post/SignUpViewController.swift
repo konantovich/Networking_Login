@@ -12,9 +12,9 @@ import Firebase
 class SignUpViewController: UIViewController {
 
 
-    var activityIndicator: UIActivityIndicatorView! //крутилка будет крутиться на кнопке Continue пока ждем ответ сервера
+    var activityIndicator: UIActivityIndicatorView!
     
-    //создали кнопку программно, что бы можно было ее поднимать (в зависимости от клавиатуры)
+  
     lazy var continueButton : UIButton = {
         let button = UIButton()
         
@@ -111,7 +111,7 @@ class SignUpViewController: UIViewController {
             
             //
             if let error = error {
-                print(error.localizedDescription)// .localizedDescription объяснение ошибки Firebase
+                print(error.localizedDescription)
                 
                 //кнопка опять Continue не активна
                 self.setContinueButton(enable: true)
@@ -156,7 +156,6 @@ class SignUpViewController: UIViewController {
     
     //отслеживает работу с текстовыми полями (активация доступа к кнопке Continue)
     @objc func textFieldChanged () {
-        //если поля текстовых полей не пустые, то открываем доступ к кнопке Continue (или если пустое то закрываем доступ) и если пароль равен подтверждение пароля
         guard let userName = userNameTextField.text, let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text else {return}
         let formFilled = !(userName.isEmpty) && !(email.isEmpty) && !(password.isEmpty) && !(confirmPassword.isEmpty) && password == confirmPassword
         

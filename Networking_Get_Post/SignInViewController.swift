@@ -10,9 +10,9 @@ import Firebase
 
 class SignInViewController: UIViewController {
     
-    var activityIndicator: UIActivityIndicatorView! //крутилка будет крутиться на кнопке Continue пока ждем ответ сервера
+    var activityIndicator: UIActivityIndicatorView!
     
-    //создали кнопку программно, что бы можно было ее поднимать (в зависимости от клавиатуры)
+    
     lazy var continueButton : UIButton = {
         let button = UIButton()
         
@@ -71,7 +71,6 @@ class SignInViewController: UIViewController {
         //определяем габариты и расположение и габариты клавиатуры
         let userInfo = notification.userInfo
         let keyboardFrame = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        //при появлении клавиатуры, по y высота экрана минус высота клавиатуры, минус половина высоты кнопки Continue
         continueButton.center = CGPoint(x: view.center.x, y: view.frame.height - keyboardFrame.height - 16.0 - continueButton.frame.height / 2)
         activityIndicator.center = continueButton.center
     }
@@ -121,7 +120,7 @@ class SignInViewController: UIViewController {
     
     //отслеживает работу с текстовыми полями (активация доступа к кнопке Continue)
     @objc func textFieldChanged () {
-        //если поля текстовых полей не пустые, то открываем доступ к кнопке Continue (или если пустое то закрываем доступ)
+        
         guard let email = emailTextField.text, let password = passwordTextField.text else {return}
         let formFilled = !(email.isEmpty) && !(password.isEmpty)
         

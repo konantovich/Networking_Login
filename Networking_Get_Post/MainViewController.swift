@@ -18,12 +18,11 @@ class MainViewController: UICollectionViewController {
     
     private var networking = NetworkManager()
     private var dataProvider = DataProvider()
-    private var filePath: String?  //отображение пути по которому будем сохранять файл. После закачки файла наш вью контроллер будет перезагружаться в фоновом режиме. Ссылка на файл у нас доступна после завершения загрузки в dataProvider.fileLocation. Имея временную ссылку мы можем сохранить ее себе
+    private var filePath: String?  //отображение пути по которому будем сохранять файл
 
     
-    //let cloudinaryApiUrl = "https://api.cloudinary.com/v1_1/Stalonam/image/upload"
     
-    let swiftBookApi = "https://swiftbook.ru/wp-content/uploads/api/api_courses"
+    let testApi = "https://swiftbook.ru/wp-content/uploads/api/api_courses"
     
     let url = "https://jsonplaceholder.typicode.com/posts"
     
@@ -37,14 +36,14 @@ class MainViewController: UICollectionViewController {
         
         registerForNotification()//запрос у пользователя на отправку пуш уведомления (при первом запуске приложения)
         
-        //запуститься после загрузки данных (Напомню, что вью контролер перезапустится после завершения загрузки). Если этот блок сработал значит процесс загрузки завершен
+        //запуститься после загрузки данных
         dataProvider.fileLocation = { location in
             
             //сохраняем файл для дальнейшого использование
             print("Download finish: \(location.absoluteString)")
             
             self.filePath = location.absoluteString
-            self.alert.dismiss(animated: false, completion: nil)//при перезагрузки приложения алертКонтролер будет закрываться
+            self.alert.dismiss(animated: false, completion: nil)
            
             self.postNotification()
         }
@@ -56,19 +55,19 @@ class MainViewController: UICollectionViewController {
         
     }
     
-    private var alert: UIAlertController!//алерт загрузки файла
+    private var alert: UIAlertController!
     
     //настраиваем алерт загрузки
     private func showAlert() {
         alert = UIAlertController(title: "Downloading...", message: "0%", preferredStyle: .alert)
         
-        //увеличим контсрейнтами размер алерта
-        let height = NSLayoutConstraint(item: alert.view,//для какого объекта используем констрейн
-                                       attribute: .height,//какой констрейн это будет (в данном случае высоты .height)
-                                       relatedBy: .equal,//равняется ли этого констрейн высоте или нет
-                                       toItem: nil, //к чему цепляем констрейн
-                                       attribute: .notAnAttribute, //взаимосвязь
-                                       multiplier: 0, constant: 170) //величина констрейта
+        
+        let height = NSLayoutConstraint(item: alert.view,
+                                       attribute: .height,
+                                       relatedBy: .equal,
+                                       toItem: nil,
+                                       attribute: .notAnAttribute,
+                                       multiplier: 0, constant: 170)
         alert.view.addConstraint(height)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { alert in
@@ -76,18 +75,18 @@ class MainViewController: UICollectionViewController {
         }
         alert.addAction(cancelAction)
         
-        present(alert, animated: true) {//вызывая алерт будем добавлять новые эллементы (прогресБар и активитиИндикатор)
+        present(alert, animated: true) {
             
             //ActivityIndicator
-            let size = CGSize(width: 40, height: 40)//будет размер активити индикатор
-            let point = CGPoint(x: self.alert.view.frame.width / 2 - 20, y: self.alert.view.frame.height / 2 - 20)//размещаем по центру, соответсвено берем половину высоты и половину ширины и отнимаем сам размер (40, 40)
+            let size = CGSize(width: 40, height: 40)
+            let point = CGPoint(x: self.alert.view.frame.width / 2 - 20, y: self.alert.view.frame.height / 2 - 20)
             
-            let activityIndicator = UIActivityIndicatorView(frame: CGRect(origin: point, size: size)) //origin - координаты расположения, size - размер
+            let activityIndicator = UIActivityIndicatorView(frame: CGRect(origin: point, size: size))
             activityIndicator.color = .gray
             activityIndicator.startAnimating()
             
             //ProgressView
-            let progressView = UIProgressView(frame: CGRect(x: 0, y: self.alert.view.frame.height - 44, width: self.alert.view.frame.width, height: 2))//расположим снизу но над кнопкой "Cancel", соответсвено берем высоту алерта и отнимаем высоту кнопки Кенсел (она у нас 44 поинта)
+            let progressView = UIProgressView(frame: CGRect(x: 0, y: self.alert.view.frame.height - 44, width: self.alert.view.frame.width, height: 2))
             progressView.tintColor = .blue
             //progressView.progress = 0.5
             self.dataProvider.onProgress = { (progress) in
@@ -107,7 +106,7 @@ class MainViewController: UICollectionViewController {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
+       
         return actions.count
     }
 
@@ -149,11 +148,11 @@ class MainViewController: UICollectionViewController {
         case "Response Data":
             print("Response Data")
             performSegue(withIdentifier: "ResponseData", sender: self)
-            AlamofireNetworkRequest.responseData(url: swiftBookApi)
+            AlamofireNetworkRequest.responseData(url: testApi)
         case "Response String":
-            AlamofireNetworkRequest.responseString(url: swiftBookApi)
+            AlamofireNetworkRequest.responseString(url: testApi)
         case "Response":
-            AlamofireNetworkRequest.response(url: swiftBookApi)
+            AlamofireNetworkRequest.response(url: testApi)
         case "LargeImageDownloadAlamofire":
             performSegue(withIdentifier: "LargeImage", sender: self)
         case "Post with Alamofire":
@@ -236,8 +235,8 @@ extension MainViewController {
     //создадим уведомление срабатывающее по времени
     private func postNotification () {
         let content = UNMutableNotificationContent() //объект контента
-        content.title = "Download complete!" //заголовок
-        content.body = "Transfer has completed. File: \(filePath ?? "")" //текст уведомления с ссылкой
+        content.title = "Download complete!"
+        content.body = "Transfer has completed. File: \(filePath ?? "")"
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false) //временной тригер срабатывания (через 3 сек после загрузки файла)
         let request = UNNotificationRequest(identifier: "TransferComplete", content: content, trigger: trigger) //запрос с идентификатором, передаем сюда контент и тригер
@@ -258,7 +257,7 @@ extension MainViewController {
         if AccessToken.current == nil{
             print("The user is logout in")
             
-            //если не активен то запускаем наш LoginViewController для логина на фейсбук(в основном потоке)
+            //если не активен то запускаем наш LoginViewController для логина 
             DispatchQueue.main.async {
                 let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                 let loginVC = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController

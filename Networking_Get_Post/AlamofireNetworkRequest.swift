@@ -17,43 +17,14 @@ class AlamofireNetworkRequest {
     //делаем запрос с использованием  Alamofire .responseJSON
     static func sendRequestAlamofire (jsonUrlString: String, completion:  @escaping (_ apiStruct: [ApiStructAlamofire]) -> () ) {
         guard let url = URL(string: jsonUrlString) else {return}
-        
-        //request - посылаем запрос по url, responseJSON ответ сервера нам нужен в формате JSON, дальше в замыкании получаем ответ от сервера и выводим его на экран или используем далее. В скобачках где url ставим наш API url, и в метод тип запроса
-        AF.request(url, method: .get).validate().responseJSON { responseJson in //response приходит массив словарей с типом Any
-            // print(response)
-            //response.statusCode - возвращает статус кода ответа
-            //response.value - возвращает результат ответа, в случае, если ответ пришел без ошибки
-            //response.error - возвращает ошибку
+   
+        AF.request(url, method: .get).validate().responseJSON { responseJson in //response приходит массив
             
-            switch responseJson.result {//.result говорит пришел ответ с ошибкой или результатом
+            switch responseJson.result {
             
-            
-            case .success(let value)://без .validate() всегда будет .success (кроме если не будет инета)
+            case .success(let value):
                 print("value: ", value)
-                // var courses = [ApiStructAlamofire]()
-                //     guard let arrayOfItems = value as? Array<[String:Any]> else {return} //ключ String, значение Any (Int, String и т д)
-                
-                
-                
-                //                for field in arrayOfItems {
-                //                    //из-за того что наш словарь имеет значение Any, приходится его кастить(опеределить) к типу
-                //                    let course = ApiStruct(id: field["id"] as? Int ?? 0,
-                //                                           name: field["name"] as? String ?? "",
-                //                                           link: field["link"] as? String ?? "",
-                //                                           imageUrl: field["imageUrl"] as? String ?? "",
-                //                                           numberOfLessons: field["nubmerOfLessons"] as? Int,
-                //                                           numberOfTests: field["numberOfTests"] as? Int)
-                //                    courses.append(course) //получили массив с экземплярами нашей модели
-                //
-                //                }
-                //
-                //                for field in arrayOfItems {
-                //                    guard let course = ApiStructAlamofire(json: field) else {return}
-                //                    courses.append(course)
-                //                }
-                //                completion(courses)
-                //
-                //                print("arrayOfItems: ", arrayOfItems)
+             
                 
                 guard let courses = ApiStructAlamofire.getArray(from: value) else {return}
                 completion(courses)
@@ -102,7 +73,7 @@ class AlamofireNetworkRequest {
     }
     
     
-    //делаем запрос с спользованием .response. Метод не обрабатывает данные сервера, а выдает в том виде в котором были получены, это удобно если необходимо данные обрабатывать в ручную. У метода .response нет свойства .result
+    //делаем запрос с спользованием .response
     static func response (url: String) {
         AF.request(url).responseString { response in
             
@@ -115,7 +86,7 @@ class AlamofireNetworkRequest {
     
     
     
-    //подключаем картинку по API через Alamofire (.responseData)
+    //подключаем картинку по API через Alamofire
     func downloadImage (url: String, completion: @escaping (_ image: UIImage?)->()) {
         AF.request(url).responseData { responseData in
             switch responseData.result {
@@ -130,16 +101,7 @@ class AlamofireNetworkRequest {
         }
     }
         
-        
-        //загружаем большое изображение при помощи Alamofire
-        
-        //Свойства класса Progress
-        //
-        //totalUnitCount - общий объем загруенных файлов
-        //completedUnitCount - информация о загруженном объеме данных
-        //fractionCompleted - результат деления completedUnitCount на totalUnitCount
-        //localizedDescription - локализированное описание хода загрузки
-        //localizedAdditionalDescription - детальное описание хода загрузки
+      
         static func downloadLargeImageAlamofireWithProgress (url: String, completion: @escaping (_ image: UIImage) -> ()) {
             
             guard let url = URL(string: url) else {return}
@@ -256,7 +218,7 @@ class AlamofireNetworkRequest {
         let httpHeaders : HTTPHeaders = ["Authorization": "Client-ID f9529bd757695b7"]
         
 
-        //способ закачки изображение только маленького объема (для видео не подойдет) на большие файлы памяти не хватит. Сначала подготавливаем файл ввиде ссылке на диске и потом уже передаем на сервер
+        //способ закачки изображение только маленького объема (для видео не подойдет) 
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(data, withName: "image")
             

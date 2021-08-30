@@ -138,7 +138,6 @@ extension LoginViewController: LoginButtonDelegate {
     //возвращаемся в основной MainViewController после логина
     private func openMainViewController () {
         
-        //dismiss закрывает текущий ViewController
         dismiss(animated: true, completion: nil)
         
     }
@@ -169,13 +168,9 @@ extension LoginViewController: LoginButtonDelegate {
     //подключаем/авторизируем пользователя Facebook в Firebase/Auth
     private func singInToFirebase() {
         
-        //берем текущий токен пользователя на ФБ
+       
         let accesToken = AccessToken.current
-        
-        //переводим текущий токен в строку
         guard let accessTokenString = accesToken?.tokenString else {return}
-        
-        //передаем полномочия авторизации через фейсбук  фаербейсу
         let credentials = FacebookAuthProvider.credential(withAccessToken: accessTokenString)
         
         //настраиваем фаербейс
@@ -205,7 +200,6 @@ extension LoginViewController: LoginButtonDelegate {
                 return
             }
             
-            //Парсим данные с фейсбука
             //получим раньше чем этот пользователь попадет на firebase
             if let userData = result as? [String : Any] {
                 self.userProfile = UserProfile(data: userData)
@@ -220,14 +214,8 @@ extension LoginViewController: LoginButtonDelegate {
     
     //отправляем в firebase (настроили сохранение в базе данных firebase)
     private func saveIntoFirebase () {
-        
-        //идентификатор на firebase
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        //массив словарей с подключенными данными из Facebook
         let userData = ["name": userProfile?.name, "email": userProfile?.email]
-        
-        //по ключу uid будем передать на Firebase наш массив словарей userData
         let values = [uid: userData]
         
         print("uid firebase: ",userData)
@@ -235,8 +223,7 @@ extension LoginViewController: LoginButtonDelegate {
         
     
         Database.database().reference().child("users").child(uid).setValue(["test":"lolkek"])
-        
-        //создаем новую директорию в БД Firebase'а в которой будет хранится все авторизованые через приложение  //с именем директории "users"
+   
         Database.database().reference().child("users").updateChildValues(values) { (error, _) in //обновить значение в директории (с нашим словарем)
            
                 if let error = error {
@@ -268,11 +255,9 @@ extension LoginViewController {
     private func userGoogleSingIn (){
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
 
-        // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
        
         print(config)
-        // Start the sign in flow!
         GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { [unowned self] user, error in
             
             
@@ -284,9 +269,9 @@ extension LoginViewController {
             
             print("success logged into google")
             
-            //сохраняем исходные данные гугла в свойствах нашей моделе, для дальнейшей передачи данных в Firebase (делаем это что бы можно было логиниться с разных провайдеров)
+    
             if let userName = user?.profile?.name, let userEmail = user?.profile?.email {
-                //подготовили словарь
+               
                 let userData = ["name": userName, "email": userEmail]
                 
                 userProfile = UserProfile(data: userData)
@@ -303,9 +288,7 @@ extension LoginViewController {
             //для дальнейшей регистриции пользователя в Firebase
           let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                          accessToken: authentication.accessToken)
-            
-          // ...
-            //Входим в Firebase
+      
             Auth.auth().signIn(with: credential) { user, error in
                 if let error = error {
                     print("Error auth google in Firebase :", error)
@@ -323,15 +306,14 @@ extension LoginViewController {
     
     
     
-    //Вход в Google через custom кнопку
+  
     @objc func handleGoogleLoginCustom () {
         print("handleGoogleLoginCustom")
         
         userGoogleSingIn()
     }
     
-    
-    //Вход через Email
+   
     @objc func handleEmailLogin () {
         performSegue(withIdentifier: "signInSegue", sender: self)
     }
