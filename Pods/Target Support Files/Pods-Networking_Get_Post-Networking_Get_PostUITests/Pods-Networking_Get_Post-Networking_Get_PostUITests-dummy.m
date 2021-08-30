@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_Networking_Get_Post_Networking_Get_PostUITests : NSObject
+@end
+@implementation PodsDummy_Pods_Networking_Get_Post_Networking_Get_PostUITests
+@end
