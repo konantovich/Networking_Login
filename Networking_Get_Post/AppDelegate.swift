@@ -18,13 +18,14 @@ import GoogleSignIn
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
-    //Вообщем в этот AppDelegate мы передаем нашу загрузку, что бы можно было продолжать загружать фоново (за загрузку будет отвечать AppDelegate) и если мы свернем приложение, то AppDelegate продолжит работу (и продолжит загрузку), а MainViewController после того как свернули остановит работу
-     
+    
+    
     var bgSessionCompletionHandler: (()-> ())?//сюда сохраним completionHandler из handleEventsForBackgroundURLSession
 
     //будет перехватывать идентификатор нашей сессии. Необходимо сохранить захваченое значение из параметра completionHandler
-    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {//в блок completionHandler будет передаваться значение с индентификатором сессии вызывающего запуск приложения
-        //при запуске приложения снова создается сессия для фоновой загрузки данных, которая автоматом связывается с текущей фоновой активностью, по этому будем сохранять захваченое значение в созданом свойстве bgSessionCompletionHandler
+    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+        
+        print("Yo")
         
         bgSessionCompletionHandler = completionHandler
          
